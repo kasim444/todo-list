@@ -1,0 +1,27 @@
+.header {
+  background: var(--color-secondary-blue) !important;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__title {
+  color: var(--color-soft-white);
+}
+
+.header__nav > ul {
+  list-style-type: none;
+  display: flex;
+}
+
+.header__nav > ul > li > a {
+  color: var(--color-soft-white);
+  transition: color 0.3s ease;
+}
+
+.header__nav > ul > li > a:hover {
+  color: var(--color-primary-grey);
+}
+
+.header__nav > ul > li + li {
+  margin-left: 1em;
+}
