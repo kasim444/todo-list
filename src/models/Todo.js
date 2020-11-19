@@ -2,14 +2,15 @@ import { types } from 'mobx-state-tree'
 
 const Todo = types
   .model({
-    name: types.optional(types.string, ''),
-    done: types.optional(types.boolean, false),
+    text: types.string,
+    completed: false,
+    id: types.identifierNumber,
   })
   .actions((self) => ({
-    setName(newName) {
+    changeName(newName) {
       self.name = newName
     },
-    toggle() {
+    toggleDone() {
       self.done = !self.done
     },
   }))

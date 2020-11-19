@@ -1,16 +1,49 @@
-import { types } from 'mobx-state-tree'
+import { types, destroy } from 'mobx-state-tree'
+import { createContext, useContext } from 'react'
 import Todo from './Todo'
-import User from './User'
 
-const RootStore = types
+const RootModel = types
   .model({
-    users: types.map(User),
-    todos: types.map(Todo),
+    todos: types.array(Todo),
   })
   .actions((self) => ({
-    addTodo(id, name) {
-      self.todos.set(id, Todo.create({ name }))
+    addTodo(todoItem) {
+      self.todos.push(todoItem)
+    },
+    removeTodo(todoItem) {
+      destroy(todoItem)
+    },
+  }))
+  .views((self) => ({
+    get totalTodo() {
+      return self.todos.length
     },
   }))
 
-export default RootStore
+export const RootStore = RootModel.create({
+  todos: [
+    {
+      text: 'learn Mobx',
+      completed: false,
+      id: 0,
+    },
+    {
+      text: 'learn MST',
+      completed: false,
+      id: 1,
+    },
+  ],
+})
+
+const RootStoreContext = createContext(null)
+
+export const Provider = RootStoreContext.Provider
+
+export const useStore = () => {
+  const store = useContext(RootStoreContext)
+  if (store === null) {
+    throw new Error('Store cannot be null, please add a context provider')
+  }
+
+  return store
+}

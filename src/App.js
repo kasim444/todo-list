@@ -1,27 +1,25 @@
 import { TodoList, Header } from './component'
 import { TodoCreate } from './forms'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { observer } from 'mobx-react'
-import { values } from 'mobx'
+import { Provider, RootStore } from './models/RootStore'
 
-const App = observer((props) => {
+const App = (props) => {
   return (
-    <Router>
-      <Header />
+    <Provider value={RootStore}>
+      <Router>
+        <Header />
 
-      {values(props.store.todos).map((todo) => (
-        <p>{todo.name}</p>
-      ))}
-      <Switch>
-        <Route path='/create'>
-          <TodoCreate />
-        </Route>
-        <Route path='/' exact>
-          <TodoList />
-        </Route>
-      </Switch>
-    </Router>
+        <Switch>
+          <Route path='/create'>
+            <TodoCreate />
+          </Route>
+          <Route path='/' exact>
+            <TodoList />
+          </Route>
+        </Switch>
+      </Router>
+    </Provider>
   )
-})
+}
 
 export default App
