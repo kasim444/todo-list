@@ -1,10 +1,13 @@
 import { types, destroy } from 'mobx-state-tree'
 import { createContext, useContext } from 'react'
 import Todo from './Todo'
+import Ui from './Ui'
+import makeInspectable from 'mobx-devtools-mst'
 
 const RootModel = types
   .model({
     todos: types.array(Todo),
+    theme: Ui,
   })
   .actions((self) => ({
     addTodo(todoItem) {
@@ -33,7 +36,12 @@ export const RootStore = RootModel.create({
       id: 1,
     },
   ],
+  theme: {
+    activeTheme: 'dark',
+  },
 })
+
+makeInspectable(RootStore)
 
 const RootStoreContext = createContext(null)
 

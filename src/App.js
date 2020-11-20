@@ -1,25 +1,25 @@
-import { TodoList, Header } from './component'
-import { TodoCreate } from './forms'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { TodoList, SideMenu } from './component'
 import { Provider, RootStore } from './models/RootStore'
+import { ThemeProvider } from 'styled-components'
+import { lightTheme, darkTheme, GlobalStyles } from './theme'
+import { observer } from 'mobx-react-lite'
+import { Layout } from 'antd'
 
-const App = (props) => {
+const App = observer(() => {
   return (
     <Provider value={RootStore}>
-      <Router>
-        <Header />
-
-        <Switch>
-          <Route path='/create'>
-            <TodoCreate />
-          </Route>
-          <Route path='/' exact>
-            <TodoList />
-          </Route>
-        </Switch>
-      </Router>
+      <ThemeProvider
+        theme={
+          RootStore.theme.activeTheme === 'light' ? lightTheme : darkTheme
+        }>
+        <GlobalStyles />
+        <Layout>
+          <SideMenu />
+          <TodoList />
+        </Layout>
+      </ThemeProvider>
     </Provider>
   )
-}
+})
 
 export default App

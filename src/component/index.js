@@ -1,5 +1,4 @@
-import Header from './Header'
-import Layout from './Layout'
 import TodoList from './TodoList'
+import SideMenu from './SideMenu'
 
-export { Header, Layout, TodoList }
+export { TodoList, SideMenu }

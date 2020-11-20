@@ -1,19 +1,14 @@
 import { observer } from 'mobx-react-lite'
-import React from 'react'
-import { Layout } from '../../component'
 import { useStore } from '../../models/RootStore'
+import { Layout, Title } from './styled'
 
 const TodoList = observer(function TodoList() {
-  const { todos } = useStore()
+  const { todos, theme } = useStore()
 
   return (
-    <Layout>
-      <div>TodoList</div>
-      {todos.map((todo) => (
-        <div key={todo.id}>
-          <p>{todo.text}</p>
-        </div>
-      ))}
+    <Layout className='site-layout'>
+      <Title>To Do List</Title>
+      <button onClick={theme.toggleTheme}>{theme.activeTheme}</button>
     </Layout>
   )
 })
