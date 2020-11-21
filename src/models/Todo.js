@@ -7,8 +7,8 @@ const Todo = types
     id: types.identifierNumber,
   })
   .actions((self) => ({
-    changeName(newName) {
-      self.name = newName
+    changeText(text) {
+      self.text = text
     },
     toggleDone() {
       self.done = !self.done

@@ -2,7 +2,7 @@ const base = {
   fontSizes: {
     title: '4em',
     subTitle: '2em',
-    default: '1em',
+    default: '1.1em',
   },
 }
 
@@ -13,6 +13,8 @@ export const lightTheme = {
     text: '#393e46',
     fadedText: '#929aab',
     head: '#c6a567',
+    shadowLight: 'rgba(255,255,255,0.05)',
+    shadowDark: 'rgba(0,0,0,0.2)',
   },
   ...base,
 }
@@ -21,9 +23,11 @@ export const darkTheme = {
   color: {
     background: '#282828',
     secondaryBackground: '#3c3b3a',
-    text: '#6B8096',
-    fadedText: '#716f6c',
+    text: '#d6d2c4',
+    fadedText: '#968c83',
     head: '#c6a567',
+    shadowLight: 'rgba(255,255,255,0.05)',
+    shadowDark: 'rgba(0,0,0,0.2)',
   },
   ...base,
 }

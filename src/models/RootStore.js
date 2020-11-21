@@ -13,11 +13,17 @@ const RootModel = types
     addTodo(todoItem) {
       self.todos.push(todoItem)
     },
+    updateTodo(newTodos) {
+      self.todos = newTodos
+    },
     removeTodo(todoItem) {
       destroy(todoItem)
     },
   }))
   .views((self) => ({
+    get allTodos() {
+      return self.todos
+    },
     get totalTodo() {
       return self.todos.length
     },
@@ -32,7 +38,7 @@ export const RootStore = RootModel.create({
     },
     {
       text: 'learn MST',
-      completed: false,
+      completed: true,
       id: 1,
     },
   ],

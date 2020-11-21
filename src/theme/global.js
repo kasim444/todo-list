@@ -36,4 +36,8 @@ export const GlobalStyles = createGlobalStyle`
   .ant-menu.ant-menu-dark.ant-menu-root {
     background: ${({ theme }) => theme.color.background};
   }
+
+  .ant-layout-sider {
+    padding: 40px 0px;
+  }
 `

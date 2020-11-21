@@ -1,88 +1,83 @@
 import { observer } from 'mobx-react-lite'
 import { useStore } from '../../models/RootStore'
-import { Layout, Title } from './styled'
+import {
+  Layout,
+  Col,
+  Title,
+  TodoItem,
+  EmptyTodoImage,
+  AddIcon,
+  AddTodoButton,
+} from './styled'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { useState, memo } from 'react'
-import { quotes as initial } from './data'
-import styled from 'styled-components'
-
-// a little function to help us with reordering the result
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list)
-  const [removed] = result.splice(startIndex, 1)
-  result.splice(endIndex, 0, removed)
-
-  return result
-}
-
-export const grid = 8
-export const borderRadius = 2
-
-const QuoteItem = styled.div`
-  width: 200px;
-  border: 1px solid grey;
-  margin-bottom: ${grid}px;
-  background-color: lightblue;
-  padding: ${grid}px;
-`
-
-function Quote({ quote, index }) {
-  return (
-    <Draggable draggableId={quote.id} index={index}>
-      {(provided) => (
-        <QuoteItem
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}>
-          {quote.content}
-        </QuoteItem>
-      )}
-    </Draggable>
-  )
-}
-
-// Ensuring the whole list does not re-render when the droppable re-renders
-const QuoteList = memo(function QuoteList({ quotes }) {
-  return quotes.map((quote, index) => (
-    <Quote quote={quote} index={index} key={quote.id} />
-  ))
-})
+import emptyTodoSrc from '../../assets/images/empty-todo.png'
+import { CreateTodoModel } from '../../component'
 
 const TodoList = observer(function TodoList() {
-  const { todos } = useStore()
-  const [quotes, setQuotes] = useState(initial)
+  const store = useStore()
 
-  function onDragEnd(result) {
+  function handleOnDragEnd(result) {
     if (!result.destination) {
       return
     }
-
-    if (result.destination.index === result.source.index) {
-      return
-    }
-
-    const newQuotes = reorder(
-      quotes,
-      result.source.index,
-      result.destination.index
-    )
-
-    setQuotes(newQuotes)
+    const items = Array.from(store.allTodos)
+    const [reorderedItem] = items.splice(result.source.index, 1)
+    items.splice(result.destination.index, 0, reorderedItem)
+    store.updateTodo(items)
   }
-
   return (
     <Layout className='site-layout'>
-      <Title>To Do List</Title>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='list'>
-          {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              <QuoteList quotes={quotes} />
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <Col>
+        <Title>To Do List</Title>
+        {store.totalTodo > 0 ? (
+          <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId='allTodos'>
+              {(provided) => (
+                <TodoItem.Container
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}>
+                  {store.allTodos.map((todo, index) => (
+                    <Draggable
+                      key={todo.id}
+                      draggableId={todo.id.toString()}
+                      index={index}>
+                      {(provided) => (
+                        <TodoItem.Row
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}>
+                          {todo.completed && <TodoItem.CheckedIcon />}
+                          <TodoItem.Text
+                            {...(todo.completed && { isCompleted: true })}>
+                            {todo.text}
+                          </TodoItem.Text>
+                          <TodoItem.DeleteButton
+                            type='text'
+                            icon={<TodoItem.DeleteIcon />}
+                            block
+                          />
+                        </TodoItem.Row>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </TodoItem.Container>
+              )}
+            </Droppable>
+          </DragDropContext>
+        ) : (
+          <>
+            <EmptyTodoImage src={emptyTodoSrc} alt='Empty Todo' />
+          </>
+        )}
+        <AddTodoButton
+          shape='circle'
+          type='text'
+          icon={<AddIcon />}
+          onClick={store.theme.toggleCreateModal}
+        />
+        {store.theme.isOpenedCreateTodoModal && <CreateTodoModel />}
+      </Col>
     </Layout>
   )
 })

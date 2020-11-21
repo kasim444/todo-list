@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const { Sider: SideContainer } = Layout
 
-export const Sider = styled(SideContainer)`
+const SiderContain = styled(SideContainer)`
   overflow: auto;
   height: 100vh;
   position: fixed;
@@ -12,7 +12,7 @@ export const Sider = styled(SideContainer)`
   .ant-layout-sider-children {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
 
     & > h6 {
       padding: 0px 16px 0px 24px;
@@ -41,8 +41,35 @@ export const Switch = styled(AntSwitch)`
 
   &.ant-switch-checked {
     background-color: ${({ theme }) => theme.color.secondaryBackground};
+    box-shadow: none;
+
     .ant-switch-handle::before {
       background: ${({ theme }) => theme.color.head};
     }
   }
 `
+
+export const LogoImage = styled.img`
+  width: 100%;
+`
+
+const Header = styled.div`
+  max-width: 100px;
+  margin: 0px auto;
+`
+
+const Body = styled.div`
+  .ant-menu-item {
+    color: ${({ theme }) => theme.color.text};
+    &:hover {
+      color: ${({ theme }) => theme.color.head};
+    }
+  }
+`
+
+export const Sider = {
+  Container: SiderContain,
+  Header: Header,
+  Body: Body,
+  Footer: Footer,
+}
