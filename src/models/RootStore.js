@@ -36,18 +36,7 @@ const RootModel = types
   }))
 
 export const RootStore = RootModel.create({
-  todos: [
-    {
-      text: 'learn Mobx',
-      completed: false,
-      id: 0,
-    },
-    {
-      text: 'learn MST',
-      completed: true,
-      id: 1,
-    },
-  ],
+  todos: [],
   theme: {
     activeTheme: 'dark',
   },
