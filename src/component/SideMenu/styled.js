@@ -58,18 +58,8 @@ const Header = styled.div`
   margin: 0px auto;
 `
 
-const Body = styled.div`
-  .ant-menu-item {
-    color: ${({ theme }) => theme.color.text};
-    &:hover {
-      color: ${({ theme }) => theme.color.head};
-    }
-  }
-`
-
 export const Sider = {
   Container: SiderContain,
   Header: Header,
-  Body: Body,
   Footer: Footer,
 }

@@ -9,7 +9,8 @@ const base = {
 export const lightTheme = {
   color: {
     background: '#f5f5f5',
-    secondaryBackground: '#fafafa',
+    secondaryBackground: '#EBECF0',
+    secondaryWhite: '#EBECF0',
     text: '#393e46',
     fadedText: '#929aab',
     head: '#c6a567',
@@ -23,6 +24,7 @@ export const darkTheme = {
   color: {
     background: '#282828',
     secondaryBackground: '#3c3b3a',
+    secondaryWhite: '#EBECF0',
     text: '#d6d2c4',
     fadedText: '#968c83',
     head: '#c6a567',

@@ -4,14 +4,13 @@ import {
   Layout,
   Col,
   Title,
-  TodoItem,
   EmptyTodoImage,
   AddIcon,
   AddTodoButton,
 } from './styled'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import emptyTodoSrc from '../../assets/images/empty-todo.png'
-import { CreateTodoModel } from '../../component'
+import { CreateTodoModel, DraggableTodoItem } from '../../component'
 
 const TodoList = observer(function TodoList() {
   const store = useStore()
@@ -23,8 +22,9 @@ const TodoList = observer(function TodoList() {
     const items = Array.from(store.allTodos)
     const [reorderedItem] = items.splice(result.source.index, 1)
     items.splice(result.destination.index, 0, reorderedItem)
-    store.updateTodo(items)
+    store.updateTodos(items)
   }
+
   return (
     <Layout className='site-layout'>
       <Col>
@@ -32,37 +32,7 @@ const TodoList = observer(function TodoList() {
         {store.totalTodo > 0 ? (
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId='allTodos'>
-              {(provided) => (
-                <TodoItem.Container
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}>
-                  {store.allTodos.map((todo, index) => (
-                    <Draggable
-                      key={todo.id}
-                      draggableId={todo.id.toString()}
-                      index={index}>
-                      {(provided) => (
-                        <TodoItem.Row
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}>
-                          {todo.completed && <TodoItem.CheckedIcon />}
-                          <TodoItem.Text
-                            {...(todo.completed && { isCompleted: true })}>
-                            {todo.text}
-                          </TodoItem.Text>
-                          <TodoItem.DeleteButton
-                            type='text'
-                            icon={<TodoItem.DeleteIcon />}
-                            block
-                          />
-                        </TodoItem.Row>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </TodoItem.Container>
-              )}
+              {(provided) => <DraggableTodoItem provided={provided} />}
             </Droppable>
           </DragDropContext>
         ) : (

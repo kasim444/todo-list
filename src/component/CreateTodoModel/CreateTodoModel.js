@@ -19,13 +19,19 @@ const CreateTodoModel = observer(() => {
   }
 
   const handleSaveTodo = () => {
+    if (todo === '') {
+      return
+    }
     const newTodo = {
       text: todo,
       completed: false,
       id: store.totalTodo + 1,
     }
     store.addTodo(newTodo)
-    notification.success({ message: 'Todo added.', placement: 'bottomRight' })
+    notification.success({
+      message: 'Todo added.',
+      placement: 'bottomRight',
+    })
     setTodo('')
   }
 
@@ -35,13 +41,15 @@ const CreateTodoModel = observer(() => {
       centered
       visible={store.theme.isOpenedCreateTodoModal}
       onOk={handleCloseModal}
-      onCancel={handleCloseModal}>
+      onCancel={handleCloseModal}
+      footer={[]}>
       <Input
         value={todo}
         onChange={(e) => setTodo(e.target.value)}
         onKeyDown={handleKeyDown}
+        placeholder='What is your focus today?'
       />
-      <SubmitButton onClick={handleSaveTodo}>Save</SubmitButton>
+      <SubmitButton onClick={handleSaveTodo}>Add</SubmitButton>
     </Modal>
   )
 })

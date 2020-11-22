@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Layout as AntLayout, Button } from 'antd'
-import { CheckOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
 
 export const Layout = styled(AntLayout)`
   background: ${({ theme }) => theme.color.secondaryBackground};
@@ -27,83 +27,6 @@ export const DroppableList = styled.div`
   background: ${(props) => (props.isDraggingOver ? 'lightblue' : 'lightgrey')},
   padding: grid,
   width: 250
-`
-const CheckedIcon = styled(CheckOutlined)`
-  color: ${({ theme }) => theme.color.fadedText};
-`
-
-const DeleteIcon = styled(DeleteOutlined)`
-  color: ${({ theme }) => theme.color.fadedText};
-`
-
-const DeleteButton = styled(Button)`
-  display: none;
-  flex: 0;
-  transition: all 0.3s ease;
-  background: transparent;
-  border-color: none;
-  color: transparent;
-  border: none;
-  outline: none;
-
-  &::selection {
-  }
-
-  &:hover,
-  &:focus,
-  &:active {
-    color: transparent;
-    background: transparent;
-    border: none;
-    transform: scale(1.2);
-  }
-`
-
-const TodoItemText = styled.span`
-  flex: 1;
-  font-size: ${({ theme }) => theme.fontSizes.default};
-  color: ${({ theme }) => theme.color.text};
-  text-align: center;
-
-  ${(props) =>
-    props.isCompleted &&
-    css`
-      color: ${({ theme }) => theme.color.fadedText};
-      text-decoration: line-through;
-      margin-left: 15px;
-    `}
-`
-
-const TodoItemContainer = styled.div`
-  width: 100%;
-`
-
-const TodoItemRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 17px 20px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  background-color: ${({ theme }) => theme.color.secondaryBackground};
-  border-radius: 11px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6),
-    -9px -9px 16px rgba(255, 255, 255, 0.5);
-
-  & + & {
-    margin-top: 1em;
-  }
-
-  &:hover {
-    border: 1px solid rgb(198 165 103 / 0.2);
-    box-shadow: 9px 9px 16px rgb(198 165 103 / 0.2),
-      -9px -9px 16px rgb(198 165 103 / 0.2);
-
-    ${DeleteButton} {
-      display: block;
-    }
-  }
 `
 
 export const EmptyTodoImage = styled.img`
@@ -137,12 +60,3 @@ export const AddTodoButton = styled(Button)`
     font-size: 24px;
   }
 `
-
-export const TodoItem = {
-  Container: TodoItemContainer,
-  Row: TodoItemRow,
-  Text: TodoItemText,
-  CheckedIcon: CheckedIcon,
-  DeleteIcon: DeleteIcon,
-  DeleteButton: DeleteButton,
-}

@@ -40,4 +40,9 @@ export const GlobalStyles = createGlobalStyle`
   .ant-layout-sider {
     padding: 40px 0px;
   }
+
+
+  .ant-notification-notice.ant-notification-notice-closable {
+    background: ${({ theme }) => theme.color.secondaryWhite};
+  }
 `

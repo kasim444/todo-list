@@ -13,11 +13,17 @@ const RootModel = types
     addTodo(todoItem) {
       self.todos.push(todoItem)
     },
-    updateTodo(newTodos) {
+    updateTodos(newTodos) {
       self.todos = newTodos
     },
     removeTodo(todoItem) {
       destroy(todoItem)
+    },
+    updateTodo(todoId, todo) {
+      const oldTodos = Array.from(self.todos)
+      const currentTodoIndex = self.todos.findIndex((t) => t.id === todoId)
+      const newTodos = oldTodos.splice(currentTodoIndex, 0, todo)
+      self.todos = newTodos
     },
   }))
   .views((self) => ({
